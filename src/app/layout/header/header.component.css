@@ -5,6 +5,11 @@
   padding: 12px;
 }
 
+h1 {
+  font-size: 3em;
+  margin: 0.5em auto;
+}
+
 a {
   color: #ffffff;
   text-decoration: none;
