@@ -7,13 +7,19 @@
 
 a {
   color: #ffffff;
+  text-decoration: none;
 }
 
-mat-icon {
-  font-size: 1em;
-  vertical-align: -0.15em;
+a:hover {
+  color: #c5cae9;
+  cursor:pointer;
 }
 
 a:not(:last-child):after {
   content: " | ";
   }
+
+mat-icon {
+  font-size: 1em;
+  vertical-align: -0.15em;
+}
