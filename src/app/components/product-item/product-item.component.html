@@ -1,5 +1,5 @@
 <div class="product-container">
-    <div class="product-image"><img src="{{ product.url }}"></div>
+    <a routerLink="/product/{{ product.id }}" class="product-image"><img src="{{ product.url }}"></a>
     <p class="product-detail">{{ product.name }}</p>
     <p class="product-detail">£{{ product.price }}</p>
     <select class="select-input">

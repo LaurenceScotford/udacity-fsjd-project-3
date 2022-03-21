@@ -11,6 +11,8 @@ import { NgModule } from '@angular/core';
 import { ProductItemComponent } from './components/product-item/product-item.component';
 import { ProductItemDetailComponent } from './components/product-item-detail/product-item-detail.component';
 import { ProductListComponent } from './components/product-list/product-list.component';
+import { HttpClientInMemoryWebApiModule } from 'angular-in-memory-web-api';
+import { StoreDataService } from './services/store-data.service';
 
 @NgModule({
   declarations: [
@@ -28,6 +30,7 @@ import { ProductListComponent } from './components/product-list/product-list.com
     BrowserAnimationsModule,
     BrowserModule,
     HttpClientModule,
+    HttpClientInMemoryWebApiModule.forRoot( StoreDataService, {dataEncapsulation: false}),
     MatIconModule
   ],
   providers: [],
