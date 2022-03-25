@@ -56,6 +56,11 @@ button {
   margin-bottom: 1em;
 }
 
+button:hover {
+  background-color: #1a237e;
+  cursor:pointer;
+}
+
 mat-icon {
   font-size: 1em;
   vertical-align: -0.15em;

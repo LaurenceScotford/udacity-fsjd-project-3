@@ -8,6 +8,7 @@
 }
 
 .product-container {
+  position: relative;
   margin-top: 64px;
   display: flex;
   flex-wrap: wrap;
@@ -32,6 +33,16 @@
   padding: 0.5em;
 }
 
+.incart {
+  display: none;
+  position: absolute;
+  top: 0;
+  left: 0;
+  padding: 0.25em 0.5em;
+  background-color: grey;
+  color: white;
+}
+
 img {
   width: 100%;
   height: 100%;
@@ -48,4 +59,5 @@ button {
 
 button:hover {
   background-color: #1a237e;
+  cursor: pointer;
 }

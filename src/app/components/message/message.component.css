@@ -1,0 +1,17 @@
+div {
+    color: white;
+    background-color: white;
+    text-align: center;
+    padding: 0.5em 0;
+    position: fixed;
+    top: 0;
+    width: 100%;
+}
+
+.confirmation {
+    background-color: #00c853;
+}
+
+.warning {
+    background-color: #ff1744;
+}

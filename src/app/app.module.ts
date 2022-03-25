@@ -4,6 +4,7 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { BrowserModule } from '@angular/platform-browser';
 import { CartComponent } from './components/cart/cart.component';
 import { ConfirmationComponent } from './components/confirmation/confirmation.component';
+import { FormsModule } from '@angular/forms';
 import { HeaderComponent } from './layout/header/header.component';
 import { HttpClientModule } from '@angular/common/http';
 import { MatIconModule } from '@angular/material/icon';
@@ -13,6 +14,8 @@ import { ProductItemDetailComponent } from './components/product-item-detail/pro
 import { ProductListComponent } from './components/product-list/product-list.component';
 import { HttpClientInMemoryWebApiModule } from 'angular-in-memory-web-api';
 import { StoreDataService } from './services/store-data.service';
+import { MessageComponent } from './components/message/message.component';
+
 
 @NgModule({
   declarations: [
@@ -23,12 +26,14 @@ import { StoreDataService } from './services/store-data.service';
     ProductItemComponent,
     ProductItemDetailComponent,
     ProductListComponent,
+    MessageComponent,
     
   ],
   imports: [
     AppRoutingModule,
     BrowserAnimationsModule,
     BrowserModule,
+    FormsModule,
     HttpClientModule,
     HttpClientInMemoryWebApiModule.forRoot( StoreDataService, {dataEncapsulation: false}),
     MatIconModule
