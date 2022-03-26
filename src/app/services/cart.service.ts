@@ -45,4 +45,8 @@ export class CartService {
     const arrayPos = this.items.findIndex(element => element.product.id === id);
     return arrayPos === -1 ? 0: this.items[arrayPos].quantity; 
   }
+
+  clearCart() {
+    this.items = [];
+  }
 }

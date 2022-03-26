@@ -1,6 +1,5 @@
 import { Injectable } from '@angular/core';
 import { InMemoryDbService } from 'angular-in-memory-web-api';
-import { Product } from '../models/product';
 
 @Injectable({
   providedIn: 'root'
@@ -49,6 +48,26 @@ export class StoreDataService implements InMemoryDbService {
         price: 29.99,
         url: 'https://images.unsplash.com/photo-1581655353564-df123a1eb820?ixlib=rb-1.2.1&ixid=MXwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHw%3D&auto=format&fit=crop&w=800&q=80',
         description: 'Wear it with style!'
+      }
+    ],
+    orders:[
+      {
+        id: 1,
+        customerName: 'Test user',
+        deliveryAddress: '1 High Street, Anytown, AN1 2OO',
+        datetime: Date.now(),
+        items: [
+          {
+            product: {
+              name: 'book',
+              price: 9.99,
+              url: 'https://images.unsplash.com/photo-1544947950-fa07a98d237f?ixid=MXwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHw%3D&ixlib=rb-1.2.1&auto=format&fit=crop&w=800&q=80',
+              description: 'You can read it!'
+            },
+            quantity: 1
+          }
+        ],
+        status: 'complete'
       }
     ]};
   }

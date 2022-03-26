@@ -16,7 +16,6 @@ import { HttpClientInMemoryWebApiModule } from 'angular-in-memory-web-api';
 import { StoreDataService } from './services/store-data.service';
 import { MessageComponent } from './components/message/message.component';
 
-
 @NgModule({
   declarations: [
     AppComponent,
