@@ -10,6 +10,21 @@ td {
   padding-right: 0.5em;
 }
 
+mat-icon {
+  font-size: 1em;
+  vertical-align: -0.15em;
+}
+
+a {
+  text-decoration: none;
+}
+
+a:hover {
+  color: #1a237e;
+  cursor:pointer;
+  text-decoration: underline;
+}
+
 .confirmation-container {
   display: flex;
   flex-direction: column;
