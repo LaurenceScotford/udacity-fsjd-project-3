@@ -15,7 +15,7 @@ export class ProductItemDetailComponent implements OnInit {
   product: Product;
   quantity: string;
 
-  constructor(private productListService: ProductListService, private route: ActivatedRoute, private cartService: CartService, private messageService: MessageService) {
+  constructor(private productListService: ProductListService, private route: ActivatedRoute, public cartService: CartService, private messageService: MessageService) {
     this.product = {
       id: 0,
       name: '',

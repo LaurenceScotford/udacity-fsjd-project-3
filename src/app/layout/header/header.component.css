@@ -3,10 +3,11 @@
   background: #3f51b5;
   color: #fff;
   padding: 12px;
+  font-size: 1.5em;
 }
 
 h1 {
-  font-size: 3em;
+  font-size: 2.5em;
   margin: 1em auto 0.5em auto;
 }
 
@@ -27,4 +28,9 @@ a:not(:last-child):after {
 mat-icon {
   font-size: 1em;
   vertical-align: -0.15em;
+  color: silver;
+}
+
+.activecart {
+  color: white;
 }

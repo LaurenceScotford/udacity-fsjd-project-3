@@ -1,6 +1,8 @@
-<app-message></app-message>
 <div class="container">
-    <div><img src="{{ product.url }}"></div>
+    <div class="image">
+        <img src="{{ product.url }}">
+        <div *ngIf="cartService.getNumberOfItems(product.id) !== 0" class="incart">{{cartService.getNumberOfItems(product.id)}} in cart</div>
+    </div>
     <div class="detail-container">
         <p class="detail-item product-title">{{ product.name }}</p>
         <p class="detail-item">£{{ product.price }}</p>

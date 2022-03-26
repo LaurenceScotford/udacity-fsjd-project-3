@@ -3,8 +3,46 @@ img {
   border-radius: 10px;
 }
 
+.form-field label {
+  color: #3f51b5;
+  font-weight: bold;
+}
+
+.form-field:not(:last-of-type) input {
+  margin-bottom: 1.5em;
+}
+
+button {
+  background-color: #3f51b5;
+  color: white;
+  border: none;
+  border-radius: 5%;
+  padding: 0.5em;
+  margin-bottom: 2em;
+}
+
+button:hover {
+  background-color: #1a237e;
+  cursor: pointer;
+}
+
+button[disabled] {
+  background-color: grey;
+  cursor: default;
+}
+
+.error {
+  color: red;
+  font-weight: bold;
+}
+
 .form-margin {
   margin-bottom: 12px;
+}
+
+.conf-msg {
+  color: #3f51b5;
+  font-size: 0.75em;
 }
 
 .cart-item {
@@ -18,7 +56,8 @@ img {
   justify-content: center;
   flex-direction: column;
   align-items: left;
-  margin-left: 80px;
+  margin-left: 60px;
+  color: #3f51b5;
 }
 
 .number-input {
@@ -28,9 +67,11 @@ img {
 
 .cart-container {
   display: flex;
+  flex-wrap: wrap;
   flex-direction: row;
   justify-content: center;
-  margin-top: 64px;
+  margin: 64px auto 0 auto;
+  max-width: 1024px;
 }
 
 .cart-panel {
@@ -39,7 +80,21 @@ img {
 }
 
 .empty-cart-message {
+  margin: 0 auto;
   display: flex;
   justify-content: center;
+  flex-direction: column;
+  text-align: center;
   margin-top: 64px;
+  max-width: 1024px;
+}
+
+.total {
+  font-size: 2em;
+  color: #3f51b5;
+  font-weight: bold;
+}
+
+.name {
+  font-weight: bold;
 }

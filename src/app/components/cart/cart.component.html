@@ -1,1 +1,30 @@
-<p>cart works!</p>
+<div *ngIf="!items.length" class="empty-cart-message"><p>Your cart is empty!</p> <p class="link"><a routerLink="/product-list">Return to the product list</a></p></div>
+<div *ngIf="items.length"class="cart-container">
+    <div class="cart-panel">
+        <div *ngFor="let item of items" class="cart-item">
+            <div><img src="{{item.product.url}}"></div>
+            <div class="cart-item-details">
+                <p class="name">{{item.product.name}}</p>
+                <p>£{{item.product.price}}</p>
+                <div><label for="quantity">Amount:</label>&nbsp;<input type="number" name="quantity" id="quantity" step="1" min="0" class="number-input" [(ngModel)]="item.quantity" (change)="onQuantityChange(item)"></div>
+            </div>
+        </div>
+        <div class="total">Total: £{{getTotal()}}</div>
+    </div>
+    <div class="form-margin">
+        <div class="form-field">
+            <label for="name">Full name</label>&nbsp;<span *ngIf="name.touched && name.invalid" class="error">is required and must be at least 3 characters!</span><br>
+            <input type="text" name="name" id="name" [(ngModel)]="fullname" placeholder="(minimum 3 characters)" minlength="3" required #name="ngModel">
+        </div>
+        <div class="form-field">
+            <label for="address">Address</label>&nbsp;<span *ngIf="address.touched && address.invalid"  class="error">is required and must be at least 6 characters!</span><br>
+            <input type="text" name="address" id="address" [(ngModel)]="addr" placeholder="(minimum 6 characters)" minlength="6" required #address="ngModel">
+        </div>
+        <div class="form-field">
+            <label for="cardnumber">Credit card number</label>&nbsp;<span *ngIf="cardnumber.touched && cardnumber.invalid" class="error">is required and must be 16 digits!</span><br>
+            <input type="text" name="cardnumber" id="cardnumber" [(ngModel)]="cardnum" placeholder="(16 digit number)" minlength="16" maxlength="16" pattern="[0-9]{16,16}$" required #cardnumber="ngModel">
+        </div>
+        <p class="conf-msg">We'll never share your payment details with anyone else.</p>
+        <button type="submit" [disabled]="name.invalid || address.invalid || cardnumber.invalid" (click)="onSubmitOrder()">Submit</button>
+    </div>
+</div>

@@ -12,7 +12,7 @@ export class ProductItemComponent implements OnInit {
   @Input() product: Product;
   quantity: string;
 
-  constructor(private cartService: CartService, private messageService: MessageService) { 
+  constructor(public cartService: CartService, private messageService: MessageService) { 
     this.product = {
       id: 0,
       name: '',

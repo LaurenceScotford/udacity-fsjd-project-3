@@ -10,7 +10,7 @@ img {
 
 .container {
   margin: 3em auto;
-  max-width: 700px;
+  max-width: 600px;
   display: flex;
   flex-wrap: wrap;
   justify-content: space-around;
@@ -78,5 +78,20 @@ a:hover {
 
 .product-title {
   font-weight: bold;
+  font-size: 1.5em;
+}
+
+.image {
+  position: relative;
+}
+
+.incart {
+  position: absolute;
+  top: 10px;
+  left: 0px;
+  padding: 0.25em 1em  0.25em 0.5em;
+  background-color: grey;
+  color: white;
+  border-radius: 0 0.75em 0.75em 0;
   font-size: 1.5em;
 }

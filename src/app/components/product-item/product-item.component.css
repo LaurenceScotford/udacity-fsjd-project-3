@@ -34,13 +34,14 @@
 }
 
 .incart {
-  display: none;
   position: absolute;
-  top: 0;
-  left: 0;
-  padding: 0.25em 0.5em;
+  top: 6px;
+  left: 6px;
+  padding: 0.25em 1em  0.25em 0.5em;
   background-color: grey;
   color: white;
+  border-radius: 0 0.75em 0.75em 0;
+  font-size: 1.5em;
 }
 
 img {
