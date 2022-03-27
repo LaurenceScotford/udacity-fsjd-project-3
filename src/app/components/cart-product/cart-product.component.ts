@@ -26,7 +26,7 @@ export class CartProductComponent implements OnInit {
   ngOnInit(): void {
   }
 
-  onQuantityChange(item: CartItem) {
-    this.quantityChangeEvent.emit(item);
+  onQuantityChange() {
+    this.quantityChangeEvent.emit(this.item);
   }
 }
