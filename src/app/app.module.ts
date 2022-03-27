@@ -15,6 +15,7 @@ import { ProductListComponent } from './components/product-list/product-list.com
 import { HttpClientInMemoryWebApiModule } from 'angular-in-memory-web-api';
 import { StoreDataService } from './services/store-data.service';
 import { MessageComponent } from './components/message/message.component';
+import { CartProductComponent } from './components/cart-product/cart-product.component';
 
 @NgModule({
   declarations: [
@@ -26,6 +27,7 @@ import { MessageComponent } from './components/message/message.component';
     ProductItemDetailComponent,
     ProductListComponent,
     MessageComponent,
+    CartProductComponent,
     
   ],
   imports: [

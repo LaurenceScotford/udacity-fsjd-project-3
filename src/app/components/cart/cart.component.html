@@ -1,14 +1,7 @@
 <div *ngIf="!items.length" class="empty-cart-message"><p>Your cart is empty!</p> <p class="link"><a routerLink="/product-list"><mat-icon aria-hidden="false" aria-label="Back arrow">arrow_back</mat-icon>Return to the product list</a></p></div>
 <div *ngIf="items.length"class="cart-container">
     <div class="cart-panel">
-        <div *ngFor="let item of items" class="cart-item">
-            <div><img src="{{item.product.url}}"></div>
-            <div class="cart-item-details">
-                <p class="name">{{item.product.name}}</p>
-                <p>£{{item.product.price}}</p>
-                <div><label for="quantity">Amount:</label>&nbsp;<input type="number" name="quantity" id="quantity" step="1" min="0" class="number-input" [(ngModel)]="item.quantity" (change)="onQuantityChange(item)"></div>
-            </div>
-        </div>
+        <app-cart-product *ngFor="let item of items" class="cart-item" [item]="item" (quantityChangeEvent)="onQuantityChange($event)"></app-cart-product>
         <div class="total">Total: £{{getTotal()}}</div>
     </div>
     <div class="form-margin">
