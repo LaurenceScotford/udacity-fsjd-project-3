@@ -1,7 +1,8 @@
-import { Component, Input, OnInit } from '@angular/core';
+import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
+import { CartItem } from 'src/app/models/cartItem';
 import { Product } from 'src/app/models/product';
 import { CartService } from 'src/app/services/cart.service';
-import { MessageService } from 'src/app/services/message.service';
+
 
 @Component({
   selector: 'app-product-item',
@@ -11,8 +12,9 @@ import { MessageService } from 'src/app/services/message.service';
 export class ProductItemComponent implements OnInit {
   @Input() product: Product;
   quantity: string;
+  @Output() addToCartEvent = new EventEmitter<CartItem>();
 
-  constructor(public cartService: CartService, private messageService: MessageService) { 
+  constructor(public cartService: CartService) { 
     this.product = {
       id: 0,
       name: '',
@@ -26,12 +28,10 @@ export class ProductItemComponent implements OnInit {
   ngOnInit(): void {
   }
 
-  addToCart(): void  {
-    let item = {
+  addToCart() {
+    this.addToCartEvent.emit({
       product: this.product,
       quantity: parseInt(this.quantity)
-    }
-    this.cartService.addItem(item);
-    this.messageService.setMessage(`${item.quantity} x ${item.product.name} added to cart`, 'confirm');
+    });
   }
 }
