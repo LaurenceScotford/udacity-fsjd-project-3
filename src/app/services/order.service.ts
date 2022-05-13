@@ -1,3 +1,4 @@
+import { environment } from '../../environments/environment'
 import { HttpClient, HttpErrorResponse } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { catchError, Observable } from 'rxjs';
@@ -9,7 +10,7 @@ import { MessageService } from './message.service';
   providedIn: 'root'
 })
 export class OrderService  {
-  private ordersUrl = 'api/orders';
+  private ordersUrl = `${environment.apiURL}orders`;
   
   constructor(private http: HttpClient, private messageService: MessageService) { 
   }
