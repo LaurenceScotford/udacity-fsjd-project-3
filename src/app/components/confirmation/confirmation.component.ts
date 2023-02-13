@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { Order } from 'src/app/models/order';
-import { MessageService } from 'src/app/services/message.service';
+import { MessageService } from 'src/app/message.service';
 import { OrderService } from 'src/app/services/order.service';
 
 @Component({
@@ -36,7 +36,7 @@ export class ConfirmationComponent implements OnInit {
 
   getTotal(): string {
     let total = 0;
-    for(let i = 0; i < this.order.items.length; i++) {
+    for (let i = 0; i < this.order.items.length; i++) {
       total += this.order.items[i].product.price * this.order.items[i].quantity;
     }
     return total.toFixed(2);

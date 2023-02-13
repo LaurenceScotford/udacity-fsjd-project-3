@@ -2,7 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { CartItem } from 'src/app/models/cartItem';
 import { CartService } from 'src/app/services/cart.service';
-import { MessageService } from 'src/app/services/message.service';
+import { MessageService } from 'src/app/message.service';
 import { OrderService } from 'src/app/services/order.service';
 
 @Component({
@@ -24,7 +24,7 @@ export class CartComponent implements OnInit {
 
   getTotal(): string {
     let total = 0;
-    for(let i = 0; i < this.items.length; i++) {
+    for (let i = 0; i < this.items.length; i++) {
       total += this.items[i].product.price * this.items[i].quantity;
     }
     return total.toFixed(2);
@@ -32,7 +32,7 @@ export class CartComponent implements OnInit {
 
   onQuantityChange(item: CartItem): void {
     this.cartService.setItemQuantity(item);
-    this.messageService.setMessage(`Number of ${item.product.name}${(item.product.name.slice(-1).toLowerCase() !== 's' ? 's' : '')} in cart set to ${item.quantity} item${(item.quantity === 1 ? '.': 's.')}`, "confirm");
+    this.messageService.setMessage(`Number of ${item.product.name}${(item.product.name.slice(-1).toLowerCase() !== 's' ? 's' : '')} in cart set to ${item.quantity} item${(item.quantity === 1 ? '.' : 's.')}`, "confirm");
   }
 
   onSubmitOrder(): void {
@@ -48,5 +48,5 @@ export class CartComponent implements OnInit {
       this.cartService.clearCart();
       this.router.navigate([`/confirm-order/${order.id}`]);
     });
-  } 
+  }
 }

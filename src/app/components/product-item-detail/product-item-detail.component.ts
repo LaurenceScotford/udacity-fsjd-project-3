@@ -4,7 +4,7 @@ import { CartItem } from 'src/app/models/cartItem';
 import { CartService } from 'src/app/services/cart.service';
 import { ProductListService } from 'src/app/services/product-list.service';
 import { Product } from 'src/app/models/product';
-import { MessageService } from 'src/app/services/message.service';
+import { MessageService } from 'src/app/message.service';
 
 @Component({
   selector: 'app-product-item-detail',
@@ -24,7 +24,7 @@ export class ProductItemDetailComponent implements OnInit {
       description: ''
     };
     this.quantity = '1';
-   }
+  }
 
   ngOnInit(): void {
     this.getProduct();
@@ -35,7 +35,7 @@ export class ProductItemDetailComponent implements OnInit {
     this.productListService.getProduct(id).subscribe(product => this.product = product);
   }
 
-  addToCart(): void  {
+  addToCart(): void {
     let item = {
       product: this.product,
       quantity: parseInt(this.quantity)

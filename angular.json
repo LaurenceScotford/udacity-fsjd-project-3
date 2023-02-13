@@ -104,5 +104,10 @@
       }
     }
   },
-  "defaultProject": "udacity-fsjd-project-3"
+  "defaultProject": "udacity-fsjd-project-3",
+  "cli": {
+    "schematicCollections": [
+      "@ngrx/schematics"
+    ]
+  }
 }

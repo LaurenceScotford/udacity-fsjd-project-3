@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { Message } from '../models/message';
+import { Message } from './models/message';
 
 
 @Injectable({
@@ -8,7 +8,7 @@ import { Message } from '../models/message';
 export class MessageService {
   messageObj: Message;
 
-  constructor() { 
+  constructor() {
     this.messageObj = {
       message: '',
       type: 'confirm',

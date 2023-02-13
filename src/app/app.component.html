@@ -1,3 +1,14 @@
-<app-header></app-header>
-<app-message></app-message>
+<header class="header">
+    <h1>MyStore</h1>
+    <nav>
+        <a routerLink = "/">Product List</a>
+        <a routerLink="/cart">Cart<mat-icon aria-hidden="false" aria-label="Shopping cart icon" [class.activecart]="!cartService.isEmpty()">shopping_cart</mat-icon></a>
+        <a routerLink="/login" *ngIf="!isLoggedIn(); else loggedIn">Login</a>
+        <a routerLink="/register" *ngIf="!isLoggedIn(); else loggedIn">Register</a>
+        <ng-template #loggedIn><a routerLink = "/logout">Logout</a></ng-template>
+    </nav>
+</header>
+<div *ngIf="messageService.messageObj.message.length" [class.confirmation]="messageService.messageObj.type === 'confirm'" [class.warning]="messageService.messageObj.type === 'warn'">
+    {{messageService.messageObj.datetime | date:'MMM d, y h:mm a' }}: {{ messageService.messageObj.message }}
+</div>
 <router-outlet></router-outlet>

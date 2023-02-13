@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { Product } from 'src/app/models/product';
 import { ProductListService } from 'src/app/services/product-list.service';
-import { MessageService } from 'src/app/services/message.service';
+import { MessageService } from 'src/app/message.service';
 import { CartItem } from 'src/app/models/cartItem';
 import { CartService } from 'src/app/services/cart.service';
 
@@ -21,7 +21,7 @@ export class ProductListComponent implements OnInit {
     });
   }
 
-  addToCart(cartItem: CartItem): void  {
+  addToCart(cartItem: CartItem): void {
     this.cartService.addItem(cartItem);
     this.messageService.setMessage(`${cartItem.quantity} x ${cartItem.product.name} added to cart`, 'confirm');
   }

@@ -3,16 +3,16 @@ import { HttpClient, HttpErrorResponse } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { catchError, Observable } from 'rxjs';
 import { Order } from '../models/order';
-import { MessageService } from './message.service';
+import { MessageService } from '../message.service';
 
 
 @Injectable({
   providedIn: 'root'
 })
-export class OrderService  {
+export class OrderService {
   private ordersUrl = `${environment.apiURL}orders`;
-  
-  constructor(private http: HttpClient, private messageService: MessageService) { 
+
+  constructor(private http: HttpClient, private messageService: MessageService) {
   }
 
   getOrder(id: string): Observable<Order> {

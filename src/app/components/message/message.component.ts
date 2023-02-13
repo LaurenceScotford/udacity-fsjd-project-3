@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { MessageService } from 'src/app/services/message.service';
+import { MessageService } from 'src/app/message.service';
 
 enum MESSAGE_TYPE {
   Confirmation,
@@ -13,7 +13,7 @@ enum MESSAGE_TYPE {
 })
 export class MessageComponent implements OnInit {
 
-  constructor(public messageService: MessageService) { 
+  constructor(public messageService: MessageService) {
   }
 
   ngOnInit(): void {
