@@ -1,3 +1,0 @@
-<div *ngIf="messageService.messageObj.message.length" [class.confirmation]="messageService.messageObj.type === 'confirm'" [class.warning]="messageService.messageObj.type === 'warn'">
-    {{messageService.messageObj.datetime | date:'MMM d, y h:mm a' }}: {{ messageService.messageObj.message }}
-</div>

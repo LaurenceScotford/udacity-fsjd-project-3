@@ -1,7 +1,7 @@
 import { Component } from '@angular/core';
 import { AuthService } from './auth/auth.service';
-import { MessageService } from './message.service';
-import { CartService } from './services/cart.service';
+import { MessageService } from './message/message.service';
+import { CartService } from './cart/cart.service';
 
 @Component({
   selector: 'app-root',

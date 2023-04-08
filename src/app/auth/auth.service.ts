@@ -1,17 +1,12 @@
 import { HttpClient, HttpErrorResponse } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { catchError, Observable, shareReplay, Subject } from 'rxjs';
+import { catchError, Observable, shareReplay } from 'rxjs';
 import { environment } from 'src/environments/environment';
-import { User } from '../models/users';
-import { MessageService } from '../message.service';
+import { AuthToken, User } from './auth.models';
+import { MessageService } from '../message/message.service';
 
 export interface usernameAvailability {
   username_available: Boolean;
-}
-
-export interface authToken {
-  idToken: string;
-  expiresIn: number;
 }
 
 @Injectable({
@@ -39,8 +34,9 @@ export class AuthService {
   }
 
   // Attempts to login a user
-  login(user: User): Observable<authToken> {
-    return this.http.post<authToken>(this.authenticateUrl, user).pipe(
+  login(user: User): Observable<AuthToken> {
+    console.log('user: ', user);
+    return this.http.post<AuthToken>(this.authenticateUrl, user).pipe(
       shareReplay(),
       catchError((error: HttpErrorResponse) => {
         console.error(error);
@@ -51,7 +47,7 @@ export class AuthService {
   }
 
   // Creates a session with an authToken received after successful login
-  setSession(authToken: authToken) {
+  setSession(authToken: AuthToken) {
     localStorage.setItem('id_token', authToken.idToken);
     localStorage.setItem('expires_at', JSON.stringify(Date.now() + authToken.expiresIn));
   }

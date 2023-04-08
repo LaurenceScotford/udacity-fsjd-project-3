@@ -1,0 +1,22 @@
+<div>
+    <!-- To FIX: Get working with new data structure -->
+    <!-- <img src="{{item.product.url}}"> -->
+    <div class="cart-item-details">
+        <!-- To FIX: Get working with new data structure -->
+        <p>Product Name placeholder</p>
+        <p>Prod Price Placeholder</p>
+        <!-- <p class="name">{{item.product.name}}</p> -->
+        <!-- <p>£{{item.product.price}}</p> -->
+    <div>
+        <label for="quantity">Amount:</label>
+        <input 
+            type="number" 
+            name="quantity" 
+            id="quantity" 
+            step="1" 
+            min="0" 
+            class="number-input" 
+            [(ngModel)]="item.quantity" 
+            (ngModelChange)="onQuantityChange()">
+    </div>
+</div>

@@ -8,7 +8,5 @@
         <ng-template #loggedIn><a routerLink = "/logout">Logout</a></ng-template>
     </nav>
 </header>
-<div *ngIf="messageService.messageObj.message.length" [class.confirmation]="messageService.messageObj.type === 'confirm'" [class.warning]="messageService.messageObj.type === 'warn'">
-    {{messageService.messageObj.datetime | date:'MMM d, y h:mm a' }}: {{ messageService.messageObj.message }}
-</div>
+<app-message></app-message>
 <router-outlet></router-outlet>
