@@ -1,49 +1,61 @@
 import { createAction, props } from '@ngrx/store';
-import { AuthToken, User } from './auth.models';
+import { ApiAuthToken, AuthInfo, AuthUser, LocalAuthToken, NewUser, User } from './auth.models';
 
 const key = '[auth]';
 
-export const checkUserNameAvialability = createAction(
-    `${key} checkUserNameAvialability`,
-    props<{ username: string }>()
+export const checkUserNameAvailability = createAction(
+    `${key} Check Username Availability`,
+    props<{
+        username: string,
+    }>()
 );
 
 export const register = createAction(
-    `${key} register`,
-    props<{ userData: User }>()
+    `${key} Register`,
+    props<{ userData: NewUser }>()
 );
 
 export const login = createAction(
-    `${key} login`,
+    `${key} Login`,
     props<{ userData: User }>()
 );
 
-export const autoLogin = createAction(`${key} autoLogin`);
+export const autoLogin = createAction(`${key} Auto Login`);
+
+export const autoLoginSuccess = createAction(
+    `${key} Auto Login Success`,
+    props<{ userData: AuthInfo }>()
+);
+
+export const autoLoginFailure = createAction(`${key} Auto Login Failure`);
+
+export const autoLogout = createAction(`${key} Auto Logout`);
 
 
 export const logout = createAction(`${key} logout`);
 
-export const apiUsernameAvailable = createAction(`${key} apiUsernameAvailable`);
-export const apiUsernameUnvailable = createAction(`${key} apiUsernameUnvailable`);
-
-export const apiRegisterSuccess = createAction(`${key} apiRegisterSuccess`);
-export const apiRegisterFailure = createAction(
-    `${key} apiRegisterFailure`,
-    props<{
-        error: string
-    }>()
+export const apiUsernameAvailable = createAction(
+    `${key} API Username Available`,
+    props<{ userData: NewUser }>()
 );
+
+export const apiUsernameUnavailable = createAction(`${key} API Username Unvailable`);
+export const apiUsernameFailure = createAction(`${key} API Username Failure`);
+
+export const apiRegisterSuccess = createAction(`${key} API Register Success`);
+export const apiRegisterFailure = createAction(`${key} API Register Failure`);
 
 export const apiLoginSuccess = createAction(
-    `${key} apiLoginSuccess`,
+    `${key} API Login Success`,
     props<{
+        userId: string,
         username: string,
-        token: AuthToken
+        token: LocalAuthToken
     }>()
 );
-export const apiLoginFailure = createAction(
-    `${key} apiLoginFailure`,
-    props<{
-        error: string
-    }>()
-);
+
+export const apiLoginFailure = createAction(`${key} API Login Failure`);
+export const apiLoginUnauthorised = createAction(`${key} API Login Unauthorised`);
+
+export const apiSetUsernameAvailable = createAction(`${key} API Set Username Available`);
+export const apiClearUsernameAvailable = createAction(`${key} API Clear Username Available`);

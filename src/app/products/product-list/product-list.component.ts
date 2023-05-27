@@ -1,38 +1,38 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnDestroy, OnInit } from '@angular/core';
 import { Store, select } from '@ngrx/store';
-import { Observable } from 'rxjs';
+import { Observable, Subscription } from 'rxjs';
 
 import { Product } from '../products.models';
-// import { ProductListService } from '../../products/product-list.service';
 import { CartItem } from '../../cart/cart.models';
-import * as fromProducts from '../products.actions';
-import { selectProductsList } from '../products.selectors';
+import * as productsActions from '../products.actions';
+import * as cartActions from '../../cart/cart.actions'
+import { selectProductList, selectProductsStatus } from '../products.selectors';
 
 @Component({
   selector: 'app-product-list',
   templateUrl: './product-list.component.html',
   styleUrls: ['./product-list.component.css']
 })
-export class ProductListComponent implements OnInit {
-  // products: Product[] = [];
-  products$: Observable<Product[]> = this.store.select(selectProductsList);
+export class ProductListComponent implements OnInit, OnDestroy {
+  products$: Observable<Product[]> = this.store.pipe(select(selectProductList));
+  productsStatusSubscription: Subscription | null | undefined;
 
-  constructor(
-    // private productListService: ProductListService,
-    private store: Store,
-  ) { }
+  constructor(private store: Store) { }
 
   ngOnInit(): void {
-    this.store.dispatch(fromProducts.loadProducts());
-    // this.productListService.getProducts().subscribe(res => {
-    //   this.products = res;
-    // });
+    this.productsStatusSubscription = this.store.select(selectProductsStatus).subscribe(status => {
+      if (status !== 'success') {
+        this.store.dispatch(productsActions.loadProducts());
+      }
+    });
+  }
+
+  ngOnDestroy(): void {
+    this.productsStatusSubscription?.unsubscribe();
+    this.productsStatusSubscription = null;
   }
 
   addToCart(cartItem: CartItem): void {
-    this.store.dispatch(fromProducts.addProductToCart({ cartItem: cartItem }));
-    //this.cartService.addItem(cartItem);
-    // TO DO - Fix with new model structure
-    // this.messageService.setMessage(`${cartItem.quantity} x ${cartItem.product.name} added to cart`, 'confirm');
+    this.store.dispatch(cartActions.addProductToCart({ cartItem: cartItem }));
   }
 }

@@ -1,10 +1,14 @@
-export enum MESSAGE_TYPE {
-    Confirmation,
-    Warning
-}
+// export enum MESSAGE_TYPE {
+//     Confirmation,
+//     Warning
+// }
 
 export interface Message {
     message: string;
-    type: 'confirm' | 'warn';
+    messageType: 'confirm' | 'warn' | 'none';
     datetime: number;
+}
+
+export interface MessageState {
+    message: Message;
 }

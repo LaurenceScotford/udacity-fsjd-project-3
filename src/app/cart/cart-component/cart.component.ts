@@ -1,54 +1,72 @@
-import { Component, OnInit } from '@angular/core';
-import { Router } from '@angular/router';
+import { Component, OnDestroy, OnInit } from '@angular/core';
+import { Store } from '@ngrx/store';
+import { Subscription } from 'rxjs';
+
 import { CartItem } from '../cart.models';
-import { CartService } from '../cart.service';
-import { MessageService } from '../../message/message.service';
-import { OrderService } from '../../orders/order.service';
+import * as cartActions from '../cart.actions'
+import { createOrder } from '../../orders/order.actions'
+import { selectCartItems, selectCartTotal } from '../cart.selectors';
+import { selectIsLoggedIn } from 'src/app/auth/auth.selectors';
+import { Order } from 'src/app/orders/order.models';
+import { AuthService } from 'src/app/auth/auth.service';
 
 @Component({
   selector: 'app-cart',
   templateUrl: './cart.component.html',
   styleUrls: ['./cart.component.css']
 })
-export class CartComponent implements OnInit {
-  items: CartItem[] = [];
-  fullname: string = '';
-  addr: string = '';
-  cardnum: string = '';
+export class CartComponent implements OnInit, OnDestroy {
+  cartItemsSub: Subscription | null | undefined;
+  cartItems: CartItem[] = [];
+  cartTotal = '0.00';
+  cartTotalSub: Subscription | null | undefined;
+  fullname = '';
+  addr = '';
+  cardnum = '';
+  isLoggedIn = false;
+  isLoggedInSub: Subscription | null | undefined;
 
-  constructor(private cartService: CartService, private messageService: MessageService, private orderService: OrderService, private router: Router) { }
+  constructor(private store: Store, private authService: AuthService) { }
 
   ngOnInit(): void {
-    this.items = this.cartService.getItems();
+    // Subscription to get cart items
+    this.cartItemsSub = this.store.select(selectCartItems)
+      .subscribe(items => this.cartItems = items);
+    // Subscription to get total cost of items in cart
+    this.cartTotalSub = this.store.select(selectCartTotal)
+      .subscribe(total => this.cartTotal = total.toFixed(2));
+    // Subscription to check if user is logged in
+    this.isLoggedInSub = this.store.select(selectIsLoggedIn)
+      .subscribe(isLoggedIn => this.isLoggedIn = isLoggedIn);
   }
 
-  getTotal(): string {
-    let total = 0;
-    for (let i = 0; i < this.items.length; i++) {
-      // TO FIX - Get this working with new model structure
-      // total += [this.items[i].productId].price * this.items[i].quantity;
-    }
-    return total.toFixed(2);
+  ngOnDestroy(): void {
+    this.cartItemsSub?.unsubscribe();
+    this.cartItemsSub = null;
+    this.cartTotalSub?.unsubscribe();
+    this.cartTotalSub = null;
+    this.isLoggedInSub?.unsubscribe();
+    this.isLoggedInSub = null;
   }
 
   onQuantityChange(item: CartItem): void {
-    this.cartService.setItemQuantity(item);
-    //  TO FIX - Gte this working with new model structure
-    // this.messageService.setMessage(`Number of ${item.product.name}${(item.product.name.slice(-1).toLowerCase() !== 's' ? 's' : '')} in cart set to ${item.quantity} item${(item.quantity === 1 ? '.' : 's.')}`, "confirm");
+    this.store.dispatch(cartActions.updateItem({ cartItem: item }));
+  }
+
+  onEmptyCart(): void {
+    this.store.dispatch(cartActions.emptyCart({ showMessage: true }));
   }
 
   onSubmitOrder(): void {
-    this.orderService.createOrder({
-      id: null,
-      customerName: this.fullname,
-      deliveryAddress: this.addr,
-      datetime: Date.now(),
-      items: this.items,
+
+    const order: Order = {
+      user_id: this.authService.getUserId(),
+      recipient_name: this.fullname,
+      delivery_address: this.addr,
+      date_time: Date.now(),
+      products: this.cartItems,
       status: 'active'
-    }).subscribe(order => {
-      this.messageService.setMessage(`Ordered products to a total of £${this.getTotal()}`, 'confirm');
-      this.cartService.clearCart();
-      this.router.navigate([`/confirm-order/${order.id}`]);
-    });
+    }
+    this.store.dispatch(createOrder({ order }));
   }
 }

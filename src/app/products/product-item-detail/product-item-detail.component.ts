@@ -1,47 +1,59 @@
-import { Component, OnInit, Output } from '@angular/core';
+import { Component, OnDestroy, OnInit, Output } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { CartItem } from '../../cart/cart.models';
-import { CartService } from '../../cart/cart.service';
-import { ProductListService } from '../../products/product-list.service';
-import { Product } from '../products.models';
-import { MessageService } from '../../message/message.service';
+import { Product, ProductsState } from '../products.models';
+import { Store } from '@ngrx/store';
+import { selectProduct } from '../products.selectors';
+import * as CartActions from '../../cart/cart.actions';
+import { Subscription } from 'rxjs';
+import { selectItemQuantity } from 'src/app/cart/cart.selectors';
 
 @Component({
   selector: 'app-product-item-detail',
   templateUrl: './product-item-detail.component.html',
   styleUrls: ['./product-item-detail.component.css']
 })
-export class ProductItemDetailComponent implements OnInit {
-  product: Product;
+export class ProductItemDetailComponent implements OnInit, OnDestroy {
+  product: Product | undefined;
   quantity: string;
+  productSub: Subscription | null | undefined;
+  inCart: number;
+  inCartSub: Subscription | null | undefined;
 
-  constructor(private productListService: ProductListService, private route: ActivatedRoute, public cartService: CartService, private messageService: MessageService) {
-    this.product = {
-      id: '0',
-      name: '',
-      price: 0.00,
-      url: '',
-      description: ''
-    };
+  constructor(
+    private store: Store<ProductsState>,
+    private route: ActivatedRoute
+  ) {
     this.quantity = '1';
+    this.inCart = 0;
   }
 
   ngOnInit(): void {
-    this.getProduct();
+    const id = this.route.snapshot.paramMap.get('id')!;
+
+    // Subscription to get product
+    this.productSub = this.store.select(selectProduct(id))
+      .subscribe(product => this.product = product);
+
+    // Subscription to get number of items in cart
+    this.inCartSub = this.store.select(selectItemQuantity(id))
+      .subscribe(numInCart => this.inCart = numInCart);
   }
 
-  getProduct(): void {
-    const id = Number(this.route.snapshot.paramMap.get('id'));
-    this.productListService.getProduct(id).subscribe(product => this.product = product);
+  ngOnDestroy(): void {
+    this.productSub?.unsubscribe();
+    this.productSub = null;
+    this.inCartSub?.unsubscribe();
+    this.inCartSub = null;
   }
 
   addToCart(): void {
-    let item = {
-      productId: this.product.id,
-      quantity: parseInt(this.quantity)
+    if (this.product) {
+      let item: CartItem = {
+        product_id: this.product.id,
+        quantity: parseInt(this.quantity)
+      }
+      this.store.dispatch(CartActions.addProductToCart({ cartItem: item }));
     }
-    this.cartService.addItem(item);
-    // TO FIX - Get working with updated model structure
-    // this.messageService.setMessage(`${item.quantity} x ${item.product.name} added to cart`, 'confirm');
   }
 }

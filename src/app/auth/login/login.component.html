@@ -14,7 +14,7 @@
                 <button type="submit" [disabled]="username.invalid || password.invalid">Submit</button>
             </div>
         </form>
-        <p>Don't have an account yet? <a routerLink="/register">Select this link to register</a></p>
+        <p>Don't have an account yet? <a [routerLink]="['/register']">Select this link to register</a></p>
     </div>
 </div>
 

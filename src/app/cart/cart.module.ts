@@ -1,14 +1,16 @@
-import { ModuleWithProviders, NgModule } from '@angular/core';
-
+import { NgModule, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
-import { RouterModule } from '@angular/router';
-import { StoreModule } from '@ngrx/store';
+import { Store, StoreModule } from '@ngrx/store';
 import { EffectsModule } from '@ngrx/effects';
 import { MatIconModule } from '@angular/material/icon';
+
 import { CartComponent } from './cart-component/cart.component';
 import { CartProductComponent } from './cart-product/cart-product.component';
-import { CartService } from './cart.service';
+import * as fromCart from './cart.reducer'
+import { CartEffects } from './cart.effects';
+import { RouterModule } from '@angular/router';
+import { LocalStorageService } from '../services/local-storage.service';
 
 @NgModule({
     declarations: [
@@ -18,21 +20,19 @@ import { CartService } from './cart.service';
     imports: [
         CommonModule,
         FormsModule,
+        RouterModule,
         MatIconModule,
-        // RouterModule.forChild([
-        //     { path: 'cart', component: CartComponent },
-        // ]),
-        // StoreModule.forFeature(fromAuth.authFeatureKey, fromAuth.reducer),
-        // EffectsModule.forFeature([AuthEffects])
+        StoreModule.forFeature(fromCart.cartFeatureKey, fromCart.cartReducer),
+        EffectsModule.forFeature([CartEffects])
     ]
 })
-export class CartModule {
-    static forRoot(): ModuleWithProviders<CartModule> {
-        return {
-            ngModule: CartModule,
-            providers: [
-                CartService
-            ]
-        }
+export class CartModule implements OnInit {
+    constructor(
+        private localStorageService: LocalStorageService,
+        private store: Store
+    ) { }
+
+    ngOnInit(): void {
+
     }
 }

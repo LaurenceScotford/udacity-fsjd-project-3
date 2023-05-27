@@ -1,10 +1,9 @@
 import { environment } from '../../environments/environment'
-import { HttpClient, HttpErrorResponse } from '@angular/common/http';
+import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { catchError, Observable } from 'rxjs';
-import { Order } from '../orders/orders.model';
-import { MessageService } from '../message/message.service';
-
+import { Observable } from 'rxjs';
+import { Order } from './order.models';
+import { LocalStorageService } from '../services/local-storage.service';
 
 @Injectable({
   providedIn: 'root'
@@ -12,8 +11,7 @@ import { MessageService } from '../message/message.service';
 export class OrderService {
   private ordersUrl = `${environment.apiURL}orders`;
 
-  constructor(private http: HttpClient, private messageService: MessageService) {
-  }
+  constructor(private http: HttpClient, private localStorageService: LocalStorageService) { }
 
   getOrder(id: string): Observable<Order> {
     const url = `${this.ordersUrl}/${id}`;
@@ -21,12 +19,11 @@ export class OrderService {
   }
 
   createOrder(order: Order): Observable<Order> {
-    return this.http.post<Order>(this.ordersUrl, order).pipe(
-      catchError((error: HttpErrorResponse) => {
-        console.error(error);
-        this.messageService.setMessage(`Sorry! Something went wrong while we tried to place your order. Please try again later.`, 'warn');
-        throw new Error(error.message);
-      })
-    );
+    const auth_token = this.localStorageService.get('auth', 'token').idToken;
+    const headers = new HttpHeaders({
+      'Content-Type': 'application/json',
+      'Authorization': `Bearer ${auth_token}`
+    })
+    return this.http.post<Order>(this.ordersUrl, order, { headers: headers });
   }
 }

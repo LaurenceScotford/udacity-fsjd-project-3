@@ -4,7 +4,7 @@
 
 mat-icon {
   font-size: 1em;
-  vertical-align: -0.15em;
+  vertical-align: -0.8em;
 }
 
 a {
@@ -24,6 +24,10 @@ a:hover {
 
 .form-field:not(:last-of-type) input {
   margin-bottom: 1.5em;
+}
+
+h2 {
+  color: #3f51b5;
 }
 
 button {
@@ -50,7 +54,7 @@ button[disabled] {
   font-weight: bold;
 }
 
-.form-margin {
+.form-container {
   margin-bottom: 12px;
 }
 
@@ -95,3 +99,11 @@ button[disabled] {
   font-weight: bold;
 }
 
+.empty-button {
+  margin-top: 1em;
+}
+
+textarea {
+  width: 20em;
+  height: 4em;
+}

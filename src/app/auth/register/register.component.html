@@ -14,9 +14,9 @@
                 <div class="form-field">
                     <label for="regusername">Username</label>&nbsp;
                     <span *ngIf="regusername.touched && regusername.invalid" class="error">is required!</span>
-                    <span *ngIf="!uname_available" class="error">is not available! Try another...</span>
+                    <span *ngIf="runame.length && !uname_available" class="error">is not available! Try another...</span>
                     <br>
-                    <input type="text" name="regusername" id="regusername" [(ngModel)]="runame" required #regusername="ngModel">
+                    <input type="text" name="regusername" id="regusername" [(ngModel)]="runame" required #regusername="ngModel" (input)="onUsernameInput()">
                 </div>
                 <div class="form-field">
                     <label for="regpassword">Password</label>&nbsp;<span *ngIf="regpassword.touched && regpassword.invalid"  class="error">is required!</span><br>
@@ -24,7 +24,7 @@
                 </div>
                 <button type="submit" [disabled]="regusername.invalid || regpassword.invalid">Submit</button>
             </form>
-            <p>Already have an account? <a routerLink="/login">Select this link to login</a></p>
+            <p>Already have an account? <a [routerLink]="['/login']">Select this link to login</a></p>
         </div>
     </div>
 </div>

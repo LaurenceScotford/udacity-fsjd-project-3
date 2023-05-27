@@ -1,14 +1,10 @@
-<div>
-    <!-- To FIX: Get working with new data structure -->
-    <!-- <img src="{{item.product.url}}"> -->
+<div *ngIf="product">
+    <img src="{{product.url}}">
     <div class="cart-item-details">
-        <!-- To FIX: Get working with new data structure -->
-        <p>Product Name placeholder</p>
-        <p>Prod Price Placeholder</p>
-        <!-- <p class="name">{{item.product.name}}</p> -->
-        <!-- <p>£{{item.product.price}}</p> -->
+        <p class="name">{{product.name}}</p>
+        <p>£{{product.price}}</p>
+        <p>{{ item.quantity }} in cart</p>
     <div>
-        <label for="quantity">Amount:</label>
         <input 
             type="number" 
             name="quantity" 
@@ -16,7 +12,8 @@
             step="1" 
             min="0" 
             class="number-input" 
-            [(ngModel)]="item.quantity" 
-            (ngModelChange)="onQuantityChange()">
+            [(ngModel)]="newQuantity" 
+        >
+        <button [disabled]="newQuantity === item.quantity" (click)="onQuantityChange()">Update amount</button>
     </div>
 </div>

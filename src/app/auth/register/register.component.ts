@@ -1,19 +1,18 @@
-import { Component, OnInit } from '@angular/core';
-import { Router } from '@angular/router';
+import { Component, OnDestroy, OnInit } from '@angular/core';
 import { NgForm } from '@angular/forms';
 import { Store } from '@ngrx/store';
 
-import { User } from '../auth.models';
-import { AuthService } from 'src/app/auth/auth.service';
-import { MessageService } from '../../message/message.service';
+import { NewUser, User } from '../auth.models';
 import * as AuthActions from '../auth.actions'
+import { Subscription } from 'rxjs';
+import { selectUsernameAvailable } from '../auth.selectors';
 
 @Component({
   selector: 'app-login-register',
   templateUrl: './register.component.html',
   styleUrls: ['./register.component.css']
 })
-export class RegisterComponent implements OnInit {
+export class RegisterComponent implements OnInit, OnDestroy {
   uname = '';
   pword = '';
   fname = '';
@@ -21,47 +20,35 @@ export class RegisterComponent implements OnInit {
   runame = '';
   rpword = '';
   uname_available = true;
+  userNameAvailableSub$: Subscription | null | undefined;
 
   constructor(
-    private authService: AuthService,
-    private messageService: MessageService,
-    private router: Router,
     private store: Store
   ) { }
 
   ngOnInit(): void {
+    this.userNameAvailableSub$ = this.store.select(selectUsernameAvailable)
+      .subscribe(usernameAvailable => this.uname_available = usernameAvailable);
+  }
+
+  ngOnDestroy(): void {
+    this.userNameAvailableSub$?.unsubscribe();
+    this.userNameAvailableSub$ = null;
+  }
+
+  onUsernameInput() {
+    this.store.dispatch(AuthActions.checkUserNameAvailability({ username: this.runame }));
   }
 
   onSubmitRegister(regForm: NgForm) {
-    const user: User = {
-      auth_level: 0,
+    const user: NewUser = {
+      id: null,
+      auth_level: 1,
       first_name: this.fname,
       last_name: this.lname,
       username: this.runame,
       password: this.rpword
-    }
+    };
     this.store.dispatch(AuthActions.register({ userData: user }));
-    this.store.dispatch(AuthActions.checkUserNameAvialability({ username: this.runame }));
-    this.authService.checkUserNameAvailability(this.runame).subscribe((availability: { username_available: any; }) => {
-      if (availability.username_available) {
-        this.store.dispatch(AuthActions.apiUsernameAvailable());
-        const user: User = {
-          auth_level: 0,
-          first_name: this.fname,
-          last_name: this.lname,
-          username: this.runame,
-          password: this.rpword
-        }
-        this.authService.register(user).subscribe((_user: any) => {
-          this.store.dispatch(AuthActions.apiRegisterSuccess());
-          this.messageService.setMessage('Your account has been registered! Please login ...', 'confirm');
-          regForm.form.reset();
-          this.router.navigate(['/login']);
-        });
-      } else {
-        this.uname_available = false;
-        this.messageService.setMessage('The username you have entered is not available! Please try another...', 'warn');
-      }
-    });
   }
 }

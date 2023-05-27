@@ -1,45 +1,50 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnDestroy, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
-import { Order } from '../orders.model';
-import { MessageService } from '../../message/message.service';
-import { OrderService } from '../order.service';
+import { Store } from '@ngrx/store';
+import { Subscription } from 'rxjs';
+
+
+import * as orderActions from '../order.actions';
+import { selectOrderDateTime, selectOrderProducts, selectOrderTotal } from '../order.selector';
+import { OrderProduct } from '../order.models';
 
 @Component({
   selector: 'app-confirmation',
   templateUrl: './confirmation.component.html',
   styleUrls: ['./confirmation.component.css']
 })
-export class ConfirmationComponent implements OnInit {
-  order: Order = {
-    id: '',
-    customerName: '',
-    deliveryAddress: '',
-    datetime: 0,
-    items: [],
-    status: 'active'
-  };
+export class ConfirmationComponent implements OnInit, OnDestroy {
+  orderProducts: OrderProduct[] | null = null;
+  orderProductsSub: Subscription | null | undefined;
+  orderTotal: string = '';
+  orderTotalSub: Subscription | null | undefined;
+  orderDateTime: number | undefined;
+  orderDateTimeSub: Subscription | null | undefined;
 
-  constructor(private route: ActivatedRoute, private orderService: OrderService, private messageService: MessageService) { }
+  constructor(
+    private route: ActivatedRoute,
+    private store: Store
+  ) { }
 
   ngOnInit(): void {
     this.getOrder();
+    this.orderProductsSub = this.store.select(selectOrderProducts)
+      .subscribe(orderProducts => this.orderProducts = orderProducts);
+    this.orderTotalSub = this.store.select(selectOrderTotal)
+      .subscribe(total => this.orderTotal = total.toFixed(2));
+    this.orderDateTimeSub = this.store.select(selectOrderDateTime)
+      .subscribe(datetime => this.orderDateTime = datetime);
+  }
+
+  ngOnDestroy(): void {
+    this.orderProductsSub?.unsubscribe();
+    this.orderProductsSub = null;
+    this.orderTotalSub?.unsubscribe();
+    this.orderTotalSub = null;
   }
 
   getOrder(): void {
     const id: string | null = this.route.snapshot.paramMap.get('id');
-    if (id) {
-      this.orderService.getOrder(id).subscribe(order => this.order = order);
-    } else {
-      this.messageService.setMessage('Sorry! There was an error when we tried to obtain your order. Please contact our helpdesk.', 'warn');
-    }
-  }
-
-  getTotal(): string {
-    let total = 0;
-    for (let i = 0; i < this.order.items.length; i++) {
-      // TO FIX - Get working with updated model structure
-      // total += this.order.items[i].product.price * this.order.items[i].quantity;
-    }
-    return total.toFixed(2);
+    this.store.dispatch(orderActions.getOrder({ id: id as string }));
   }
 }

@@ -19,7 +19,7 @@ import { AuthEffects } from './auth.effects';
   imports: [
     CommonModule,
     FormsModule,
-    // RouterModule.forChild([{ path: 'login', component: LoginComponent }, { path: 'register', component: RegisterComponent }]),
+    RouterModule,
     StoreModule.forFeature(fromAuth.authFeatureKey, fromAuth.reducer),
     EffectsModule.forFeature([AuthEffects])
   ]

@@ -9,9 +9,11 @@ import * as AuthActions from './auth.actions';
 export const authFeatureKey = 'auth';
 
 export const initialState: AuthState = {
-  username: null,
-  token: null,
-  error: null,
+  usernameAvailable: true,
+  authUser: {
+    username: null,
+    token: null,
+  },
   status: 'pending'
 };
 
@@ -19,6 +21,7 @@ export const reducer = createReducer(
   initialState,
   on(
     AuthActions.login,
+    AuthActions.autoLogin,
     (state) => {
       return {
         ...state,
@@ -27,14 +30,42 @@ export const reducer = createReducer(
     }
   ),
   on(
-    AuthActions.apiLoginSuccess,
+    AuthActions.autoLoginSuccess,
     (state, action) => {
-      console.log('action', action);
       return {
         ...state,
-        username: action.username,
-        token: action.token,
-        error: null,
+        authUser: {
+          ...state.authUser,
+          username: action.userData.username,
+          token: action.userData.token,
+        },
+        status: 'success'
+      };
+    }
+  ),
+  on(
+    AuthActions.autoLoginFailure,
+    (state) => {
+      return {
+        ...state,
+        authUser: {
+          username: null,
+          token: null
+        },
+        status: 'pending'
+      }
+    }
+  ),
+  on(
+    AuthActions.apiLoginSuccess,
+    (state, action) => {
+      return {
+        ...state,
+        authUser: {
+          ...state.authUser,
+          username: action.username,
+          token: action.token,
+        },
         status: 'success'
       };
     }
@@ -44,23 +75,46 @@ export const reducer = createReducer(
     (state, action) => {
       return {
         ...state,
-        username: null,
-        token: null,
-        error: action.error,
+        authUser: {
+          ...state.authUser,
+          username: null,
+          token: null,
+        },
         status: 'error'
       };
     }
   ),
   on(
     AuthActions.logout,
+    AuthActions.autoLogout,
     (state) => {
       return {
         ...state,
-        username: null,
-        token: null,
-        error: null,
+        authUser: {
+          ...state.authUser,
+          username: null,
+          token: null,
+        },
         status: 'pending'
       };
+    }
+  ),
+  on(
+    AuthActions.apiSetUsernameAvailable,
+    (state) => {
+      return {
+        ...state,
+        usernameAvailable: true
+      }
+    }
+  ),
+  on(
+    AuthActions.apiClearUsernameAvailable,
+    (state) => {
+      return {
+        ...state,
+        usernameAvailable: false
+      }
     }
   )
 );

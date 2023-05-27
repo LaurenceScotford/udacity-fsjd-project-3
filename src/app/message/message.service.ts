@@ -11,14 +11,14 @@ export class MessageService {
   constructor() {
     this.messageObj = {
       message: '',
-      type: 'confirm',
+      messageType: 'confirm',
       datetime: Date.now()
     };
   }
 
   setMessage(message: string, type: 'confirm' | 'warn'): void {
     this.messageObj.message = message;
-    this.messageObj.type = type;
+    this.messageObj.messageType = type;
     this.messageObj.datetime = Date.now();
   }
 }

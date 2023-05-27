@@ -27,12 +27,16 @@ a:not(:last-child):after {
 
 mat-icon {
   font-size: 1em;
-  vertical-align: -0.15em;
+  vertical-align: -0.25em;
   color: silver;
 }
 
 .activecart {
   color: white;
+}
+
+.activelink {
+  text-decoration: underline;
 }
 
 router-outlet {

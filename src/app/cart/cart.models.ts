@@ -1,10 +1,7 @@
-export interface CartItem {
-    productId: string;
-    quantity: number;
-}
+export const cartLocalStorageName = 'cart';
 
 export interface CartItem {
-    productId: string;
+    product_id: string;
     quantity: number;
 }
 

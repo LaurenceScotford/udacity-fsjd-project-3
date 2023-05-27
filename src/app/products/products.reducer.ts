@@ -3,16 +3,15 @@ import {
     on
 } from '@ngrx/store';
 
-import { ProductsState } from './products.models';
+import { ProductsState, adapter } from './products.models';
 import * as ProductsActions from './products.actions';
 
 export const productsFeatureKey = 'products';
 
-export const initialState: ProductsState = {
-    products: [],
+export const initialState: ProductsState = adapter.getInitialState({
     selectedProductId: null,
     status: 'pending'
-};
+});
 
 export const productsReducer = createReducer(
     initialState,
@@ -28,29 +27,16 @@ export const productsReducer = createReducer(
     on(
         ProductsActions.productsLoaded,
         (state, action) => {
-            console.log(action.products);
-            return {
-                ...state,
-                products: [...action.products],
-                status: 'success'
-            }
+            return adapter.setAll(action.products, { ...state, status: 'success' });
         }
     ),
     on(
-        ProductsActions.addProductToCart,
-        (state, _action) => {
-            return {
-                ...state,
-            };
-        }
-    ),
-    on(
-        ProductsActions.selectProduct,
+        ProductsActions.loadProductsFailed,
         (state, action) => {
             return {
                 ...state,
-                selectedProductId: action.selectedProductId
-            };
+                status: 'error'
+            }
         }
     )
 );

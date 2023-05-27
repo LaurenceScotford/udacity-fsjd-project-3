@@ -1,3 +1,9 @@
-<div class="message" *ngIf="messageService.messageObj.message.length" [class.confirmation]="messageService.messageObj.type === 'confirm'" [class.warning]="messageService.messageObj.type === 'warn'">
-    {{messageService.messageObj.datetime | date:'MMM d, y h:mm a' }}: {{ messageService.messageObj.message }}
+<div
+    class="message"
+    *ngIf="messageType !== 'none' && message.length"
+    [class.confirmation]="messageType === 'confirm'"
+    [class.warning]="messageType === 'warn'"
+>
+    {{datetime | date:'MMM d, y h:mm a' }}:
+    {{ message }}
 </div>
