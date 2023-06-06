@@ -1,7 +1,7 @@
 <div class="log-reg-container">
     <div class="login-container">
         <h2>Login to existing account</h2>
-        <form #loginForm="ngForm" (ngSubmit)="onSubmitLogin(loginForm)">
+        <form #loginForm="ngForm" (ngSubmit)="onSubmitLogin()">
             <div class="form-margin">
                 <div class="form-field">
                     <label for="username">Username</label>&nbsp;<span *ngIf="username.touched && username.invalid" class="error">is required!</span><br>

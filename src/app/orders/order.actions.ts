@@ -1,7 +1,7 @@
 import { createAction, props } from '@ngrx/store';
 import { Order } from './order.models';
 
-const key = '[orders]';
+const key = '[order]';
 
 export const createOrder = createAction(
     `${key} Create Order`,

@@ -3,7 +3,6 @@ import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
 import { environment } from 'src/environments/environment';
 import { ApiAuthToken, NewUser, User } from './auth.models';
-import { MessageService } from '../message/message.service';
 import { LocalStorageService } from '../services/local-storage.service';
 
 export interface usernameAvailability {

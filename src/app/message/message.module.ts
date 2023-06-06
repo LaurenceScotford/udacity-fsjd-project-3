@@ -1,9 +1,8 @@
-import { ModuleWithProviders, NgModule } from '@angular/core';
+import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { StoreModule } from '@ngrx/store';
 
 import { MessageComponent } from './messageComponent/message.component';
-import { MessageService } from './message.service';
 import * as fromMessage from './message.reducer';
 
 @NgModule({
@@ -18,13 +17,4 @@ import * as fromMessage from './message.reducer';
         MessageComponent
     ]
 })
-export class MessageModule {
-    static forRoot(): ModuleWithProviders<MessageModule> {
-        return {
-            ngModule: MessageModule,
-            providers: [
-                MessageService
-            ]
-        }
-    }
-}
+export class MessageModule { }

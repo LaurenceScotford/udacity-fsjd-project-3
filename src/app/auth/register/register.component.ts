@@ -40,7 +40,7 @@ export class RegisterComponent implements OnInit, OnDestroy {
     this.store.dispatch(AuthActions.checkUserNameAvailability({ username: this.runame }));
   }
 
-  onSubmitRegister(regForm: NgForm) {
+  onSubmitRegister() {
     const user: NewUser = {
       id: null,
       auth_level: 1,

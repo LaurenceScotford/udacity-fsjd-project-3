@@ -26,7 +26,7 @@ export class LoginComponent implements OnInit {
   ngOnInit(): void {
   }
 
-  onSubmitLogin(loginForm: NgForm) {
+  onSubmitLogin() {
     const user: User = {
       username: this.uname,
       password: this.pword

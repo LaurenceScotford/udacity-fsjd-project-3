@@ -4,11 +4,19 @@ This is my submission for the third project for the Udacity Full Stack Javascrip
 
 ## About
 
-This is a front end for an online store. It is built using the Angular framework.
+This is a front end for an online store. It is built using the Angular framework. A corresponding back end can be found at [https://github.com/LaurenceScotford/udacity-fsjd-project-2](https://github.com/LaurenceScotford/udacity-fsjd-project-2).
 
 ### Navigation
 
 When a user navigates to the root URL for the store, it initally shows the product list page. The user can navigate freely between this page and their cart by using the navigation links in the header.
+
+### Register
+
+The register page enables a user to register for a new account. Registration and login are required before a purchase can be made.
+
+### Login
+
+The login page enables a user to login to an existing account. Login is required before a purchase can be made.
 
 ### Product list page
 
@@ -35,10 +43,6 @@ This will show a confirmation page that confirms the items and quantities ordere
 - The order form on the cart page will not activate the Submit button until valid data is entered and instructive error messages are shown when invalid data is entered
 - There is a messaging system that shows useful confirmations of activity (or errors where applicable) in a floating status bar at the top of the screen
 
-## Implementation notes
-
-This project uses a fake back end. This is implemented using the InMemoryDbService Angular library to emulate an Http API server using dummy data in JSON files. The solution could be plugged into a suitable real back end by updating the endpoint URLs in the client services (ProductListService and OrderService).
-
 ## Set up
 
 After downloading and unzipping the files, open a terminal in the project root folder and install the application:
@@ -47,10 +51,15 @@ After downloading and unzipping the files, open a terminal in the project root f
 npm install
 ```
 
-Once the installation of dependencies has finished, the application can be started:
+Once the installation of dependencies has finished, you might want to run the test suite to check everything is working correctly:
+```
+npm run test
+```
+
+To run the full product, you will need a suitable back end to be up and running (see [https://github.com/LaurenceScotford/udacity-fsjd-project-2](https://github.com/LaurenceScotford/udacity-fsjd-project-2) for example and details of the data format):
 
 ```
-npm run start
+npm start
 ```
 
 This serves the application on the default port (4200) and will automatically open the application in the default browser.

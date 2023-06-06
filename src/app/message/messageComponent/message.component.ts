@@ -1,7 +1,7 @@
 import { Component, OnDestroy, OnInit } from "@angular/core";
 import { Store } from "@ngrx/store";
 import { Subscription } from "rxjs";
-import { selectMesage } from "../message.selectors";
+import { selectMessage } from "../message.selectors";
 
 @Component({
     selector: 'app-message',
@@ -22,7 +22,7 @@ export class MessageComponent implements OnInit, OnDestroy {
 
     ngOnInit(): void {
         // Subscription to get current message
-        this.messageSub = this.store.select(selectMesage)
+        this.messageSub = this.store.select(selectMessage)
             .subscribe(message => {
                 this.message = message.message;
                 this.messageType = message.messageType;

@@ -4,6 +4,7 @@ import { provideMockStore, MockStore } from '@ngrx/store/testing';
 import { Component } from '@angular/core';
 
 import { AppComponent } from './app.component';
+import { cold } from 'jasmine-marbles';
 
 // Component stubs
 @Component({ selector: 'app-message', template: '' })
@@ -52,10 +53,15 @@ describe('AppComponent', () => {
     expect(app.title).toEqual('udacity-fsjd-project-3');
   });
 
-  // it('should render title', () => {
-  //   const fixture = TestBed.createComponent(AppComponent);
-  //   fixture.detectChanges();
-  //   const compiled = fixture.nativeElement as HTMLElement;
-  //   expect(compiled.querySelector('.content span')?.textContent).toContain('udacity-fsjd-project-3 app is running!');
-  // });
+  it(`should dispatch a Logout action when logout is called`, () => {
+    const expected = cold('a', {
+      a: {
+        type: '[auth] Logout',
+      }
+    });
+
+    app.logout();
+
+    expect(store.scannedActions$).toBeObservable(expected);
+  });
 });

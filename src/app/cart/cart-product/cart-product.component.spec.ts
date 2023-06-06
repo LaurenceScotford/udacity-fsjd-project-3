@@ -26,7 +26,28 @@ describe('CartProductComponent', () => {
     fixture.detectChanges();
   });
 
-  it('should create', () => {
+  it('should create CartProductComponent', () => {
     expect(component).toBeTruthy();
+  });
+
+  it('should emit when onQuantityChange is called', () => {
+    spyOn(component.quantityChangeEvent, 'emit');
+
+    const item = {
+      product_id: 'product_id',
+      quantity: 1
+    }
+
+    const newQuantity = 2;
+
+    component.item = item;
+    component.newQuantity = newQuantity;
+
+    component.onQuantityChange();
+
+    expect(component.quantityChangeEvent.emit).toHaveBeenCalledWith({
+      product_id: item.product_id,
+      quantity: newQuantity
+    });
   });
 });

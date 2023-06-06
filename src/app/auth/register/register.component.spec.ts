@@ -5,6 +5,7 @@ import { Router } from '@angular/router';
 import { RouterTestingModule } from '@angular/router/testing';
 
 import { RegisterComponent } from './register.component';
+import { cold } from 'jasmine-marbles';
 
 describe('RegisterComponent', () => {
   let component: RegisterComponent;
@@ -37,7 +38,53 @@ describe('RegisterComponent', () => {
     fixture.detectChanges();
   });
 
-  it('should create', () => {
+  it('should create register component', () => {
     expect(component).toBeTruthy();
+  });
+
+  it('should dispatch an action to check username availability when onUsernameInput is called', () => {
+    const username = 'username'
+    component.runame = username;
+
+    const expected = cold('a', {
+      a: {
+        type: '[auth] Check Username Availability',
+        username: username
+      }
+    });
+
+    component.onUsernameInput();
+
+    expect(store.scannedActions$).toBeObservable(expected);
+  });
+
+  it('should dispatch an action to register when onRegister is called', () => {
+    const firstName = 'First';
+    const lastName = 'Last';
+    const username = 'username';
+    const password = 'password';
+
+    component.fname = firstName;
+    component.lname = lastName;
+    component.runame = username;
+    component.rpword = password;
+
+    const expected = cold('a', {
+      a: {
+        type: '[auth] Register',
+        userData: {
+          id: null,
+          auth_level: 1,
+          first_name: firstName,
+          last_name: lastName,
+          username: username,
+          password: password
+        }
+      }
+    });
+
+    component.onSubmitRegister();
+
+    expect(store.scannedActions$).toBeObservable(expected);
   });
 });

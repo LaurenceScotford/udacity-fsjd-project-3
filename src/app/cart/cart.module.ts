@@ -26,13 +26,5 @@ import { LocalStorageService } from '../services/local-storage.service';
         EffectsModule.forFeature([CartEffects])
     ]
 })
-export class CartModule implements OnInit {
-    constructor(
-        private localStorageService: LocalStorageService,
-        private store: Store
-    ) { }
-
-    ngOnInit(): void {
-
-    }
+export class CartModule {
 }

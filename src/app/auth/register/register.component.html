@@ -2,7 +2,7 @@
     <div class="register-container">
         <h2>Register for a new account</h2>
         <div class="form-margin">
-            <form #regForm="ngForm" (ngSubmit)="onSubmitRegister(regForm)">
+            <form #regForm="ngForm" (ngSubmit)="onSubmitRegister()">
                 <div class="form-field">
                     <label for="firstname">First name</label>&nbsp;<span *ngIf="firstname.touched && firstname.invalid" class="error">is required!</span><br>
                     <input type="text" name="firstname" id="firstname" [(ngModel)]="fname" required #firstname="ngModel">

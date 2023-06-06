@@ -1,5 +1,5 @@
 import { createAction, props } from '@ngrx/store';
-import { ApiAuthToken, AuthInfo, AuthUser, LocalAuthToken, NewUser, User } from './auth.models';
+import { AuthInfo, LocalAuthToken, NewUser, User } from './auth.models';
 
 const key = '[auth]';
 
@@ -32,14 +32,14 @@ export const autoLoginFailure = createAction(`${key} Auto Login Failure`);
 export const autoLogout = createAction(`${key} Auto Logout`);
 
 
-export const logout = createAction(`${key} logout`);
+export const logout = createAction(`${key} Logout`);
 
 export const apiUsernameAvailable = createAction(
     `${key} API Username Available`,
     props<{ userData: NewUser }>()
 );
 
-export const apiUsernameUnavailable = createAction(`${key} API Username Unvailable`);
+export const apiUsernameUnavailable = createAction(`${key} API Username Unavailable`);
 export const apiUsernameFailure = createAction(`${key} API Username Failure`);
 
 export const apiRegisterSuccess = createAction(`${key} API Register Success`);

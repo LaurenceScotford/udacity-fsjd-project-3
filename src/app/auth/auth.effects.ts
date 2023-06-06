@@ -1,6 +1,6 @@
 import { Injectable } from "@angular/core";
 import { Actions, createEffect, ofType } from "@ngrx/effects";
-import { catchError, debounceTime, exhaustMap, map, of } from "rxjs";
+import { catchError, debounceTime, exhaustMap, map, of, tap } from "rxjs";
 import { Router } from "@angular/router";
 import { Store } from "@ngrx/store";
 
@@ -32,6 +32,7 @@ export class AuthEffects {
 
     login$ = createEffect(() => this.actions$.pipe(
         ofType(fromActions.login),
+        tap(() => console.log('Create effect ran!')),
         exhaustMap((action) => this.authService.login(action.userData)
             .pipe(
                 map(authToken => fromActions.apiLoginSuccess({

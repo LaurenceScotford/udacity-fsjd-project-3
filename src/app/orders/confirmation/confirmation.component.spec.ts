@@ -5,6 +5,7 @@ import { HttpClientTestingModule } from '@angular/common/http/testing';
 
 import { ConfirmationComponent } from './confirmation.component';
 import { Component } from '@angular/core';
+import { cold } from 'jasmine-marbles';
 
 // Component stubs
 @Component({ selector: 'mat-icon', template: '' })
@@ -17,6 +18,7 @@ describe('ConfirmationComponent', () => {
   let route: ActivatedRoute;
   let store: MockStore;
   const initialState = {};
+  const id = '12abcde345678fg012hijk';
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
@@ -30,7 +32,7 @@ describe('ConfirmationComponent', () => {
           {
             provide: ActivatedRoute,
             useValue: {
-              snapshot: { paramMap: convertToParamMap({ id: '12abcde345678fg012hijk' }) }
+              snapshot: { paramMap: convertToParamMap({ id: id }) }
             }
           },
           provideMockStore({ initialState })
@@ -47,7 +49,20 @@ describe('ConfirmationComponent', () => {
     fixture.detectChanges();
   });
 
-  it('should create', () => {
+  it('should create confirmation component', () => {
     expect(component).toBeTruthy();
   });
+
+  it('should dispatch a Get Order action when getOrder is called', () => {
+    const expected = cold('a', {
+      a: {
+        type: '[order] Get Order',
+        id: id
+      }
+    });
+
+    component.getOrder();
+
+    expect(store.scannedActions$).toBeObservable(expected);
+  })
 });

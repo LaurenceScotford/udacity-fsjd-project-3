@@ -4,6 +4,7 @@ import { ActivatedRoute, convertToParamMap } from '@angular/router';
 import { provideMockStore, MockStore } from '@ngrx/store/testing';
 
 import { ProductItemDetailComponent } from './product-item-detail.component';
+import { cold } from 'jasmine-marbles';
 
 describe('ProductItemDetailComponent', () => {
   let component: ProductItemDetailComponent;
@@ -38,7 +39,35 @@ describe('ProductItemDetailComponent', () => {
     fixture.detectChanges();
   });
 
-  it('should create', () => {
+  it('should create ProductItemDetailComponent', () => {
     expect(component).toBeTruthy();
+  });
+
+  it('should dispatch a Add Product To Cart action when addToCart is called', () => {
+    const product_id = 'product_id';
+    const quantity = 1;
+
+    component.product = {
+      id: product_id,
+      name: 'name',
+      price: .01,
+      url: 'url',
+      description: 'description'
+    };
+    component.quantity = quantity.toString();
+
+    const expected = cold('a', {
+      a: {
+        type: '[cart] Add Product To Cart',
+        cartItem: {
+          product_id: product_id,
+          quantity: quantity
+        }
+      }
+    });
+
+    component.addToCart();
+
+    expect(store.scannedActions$).toBeObservable(expected);
   });
 });
